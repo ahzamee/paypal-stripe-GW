@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/page_id">
+
+    <fragment
+        android:id="@+id/page_id"
+        android:name="com.mrz.paymentgw.view.PackageFragment"
+        android:label="@string/package_list"
+        tools:layout="@layout/fragment_package">
+        <action
+            android:id="@+id/action_page_id_to_page_details"
+            app:destination="@id/page_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/page_details"
+        android:name="com.mrz.paymentgw.view.PackageDetailsFragment"
+        android:label="Package details"
+        tools:layout="@layout/fragment_package_details"/>
+
+</navigation>
