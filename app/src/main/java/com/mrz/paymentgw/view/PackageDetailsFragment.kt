@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.mrz.paymentgw.R
 import com.mrz.paymentgw.databinding.FragmentPackageDetailsBinding
@@ -37,34 +38,40 @@ class PackageDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        startPaypalPayment()
+
+        binding.packageTitle.text = args.packageItem?.title
+        binding.packageDetails.text = args.packageItem?.details
+        binding.packagePrice.text = resources.getText(R.string.bdt).toString() + args.packageItem?.price.toString()
+        binding.packageValidity.text = resources.getText(R.string.validity).toString()+" " + args.packageItem?.validity.toString()+ " Days"
+    }
+
+    private fun startPaypalPayment() {
+        Toast.makeText(requireContext(), "Please wait.....", Toast.LENGTH_LONG).show()
         binding.paymentButtonContainer.setup(
             createOrder = CreateOrder{ CreateOrderActions ->
                 val order= Order(
                     intent = OrderIntent.CAPTURE,
                     appContext = AppContext(userAction = UserAction.PAY_NOW),
                     purchaseUnitList =
-                        listOf(
-                            PurchaseUnit(
-                                amount = Amount(
-                                    currencyCode = CurrencyCode.USD, value = args.packageItem?.price.toString()
-                                )
+                    listOf(
+                        PurchaseUnit(
+                            amount = Amount(
+                                currencyCode = CurrencyCode.USD, value = args.packageItem?.price.toString()
                             )
                         )
+                    )
                 )
                 CreateOrderActions.create(order)
             },
             onApprove = OnApprove {
-                approval ->  approval.orderActions.capture{ captureOrderResult ->  Log.d("aaaaaa", "CaptureOrderResult: $captureOrderResult")}
+                    approval ->  approval.orderActions.capture{ captureOrderResult ->  Log.d("aaaaaa", "CaptureOrderResult: $captureOrderResult")}
             },
             onCancel = OnCancel { Log.d("OnCancel", "Buyer canceled the PayPal experience.")
             },
-            onError = OnError { errorInfo -> Log.d("OnError", "Error: $errorInfo")
+            onError = OnError { errorInfo ->
+                Log.d("OnError", "Error: $errorInfo")
             }
         )
-
-        binding.packageTitle.text = args.packageItem?.title
-        binding.packageDetails.text = args.packageItem?.details
-        binding.packagePrice.text = resources.getText(R.string.bdt).toString() + args.packageItem?.price.toString()
-        binding.packageValidity.text = resources.getText(R.string.validity).toString()+" " + args.packageItem?.validity.toString()+ " Days"
     }
 }
