@@ -64,14 +64,16 @@
             />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pay_now_btn"
+        <com.paypal.checkout.paymentbutton.PaymentButtonContainer
+            android:id="@+id/payment_button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pay_now"
-            android:backgroundTint="@color/very_dark_grayish_blue"
-            android:elevation="5dp"
-            app:cornerRadius="3dp"
+            app:paypal_button_color="silver"
+            app:paypal_button_label="pay"
+            app:paypal_button_shape="rectangle"
+            app:paypal_button_size="large"
+            app:paypal_button_enabled="true"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
