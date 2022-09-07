@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="package_list">Package list</string>
+    <string name="package_">Package</string>
+    <string name="bdt">BDT</string>
+    <string name="validity">Validity</string>
+    <string name="pay_now">Pay Now</string>
 </resources>

@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AppDao {
     @Query("select * from package_list")
-    fun packageList(): Flow<List<AppEntityPackageList>>
+    fun packageList(): List<AppEntityPackageList>
 }

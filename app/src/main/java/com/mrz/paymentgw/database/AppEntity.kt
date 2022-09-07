@@ -3,6 +3,7 @@ package com.mrz.paymentgw.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "package_list")
 class AppEntityPackageList(
@@ -13,7 +14,7 @@ class AppEntityPackageList(
     @ColumnInfo(name = "status")val status:Boolean?,
     @ColumnInfo(name = "validity")val validity:Int?, //validity will be in days
     @ColumnInfo(name = "createdOn")val createdOn:String?
-)
+): Serializable
 
 @Entity(tableName = "user_package_order")
 class AppEntityUserPackageOrder(

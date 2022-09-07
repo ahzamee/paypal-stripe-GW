@@ -3,22 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/page_id">
+    app:startDestination="@id/package_list">
 
     <fragment
-        android:id="@+id/page_id"
+        android:id="@+id/package_list"
         android:name="com.mrz.paymentgw.view.PackageFragment"
         android:label="@string/package_list"
         tools:layout="@layout/fragment_package">
         <action
-            android:id="@+id/action_page_id_to_page_details"
-            app:destination="@id/page_details" />
+            android:id="@+id/action_package_list_to_page_details"
+            app:destination="@id/page_details" >
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/page_details"
         android:name="com.mrz.paymentgw.view.PackageDetailsFragment"
         android:label="Package details"
-        tools:layout="@layout/fragment_package_details"/>
+        tools:layout="@layout/fragment_package_details">
+        <argument
+            android:name="package_item"
+            app:argType="com.mrz.paymentgw.database.AppEntityPackageList"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
 </navigation>

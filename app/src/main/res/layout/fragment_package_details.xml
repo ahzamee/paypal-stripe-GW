@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.PackageDetailsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <import type="com.mrz.paymentgw.database.AppEntityPackageList"/>
+
+        <variable
+            name="package_item"
+            type="AppEntityPackageList" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="20dp"
+        android:background="@color/dark_grayish_blue"
+        tools:context=".view.PackageDetailsFragment">
 
-</FrameLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/package_validity"
+            style="@style/regular_textView"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/package_basic_info"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/package_basic_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/package_title"
+                style="@style/regular_textView"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/package_details"
+                style="@style/regular_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/package_price"
+                style="@style/regular_textView"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pay_now_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_now"
+            android:backgroundTint="@color/very_dark_grayish_blue"
+            android:elevation="5dp"
+            app:cornerRadius="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
