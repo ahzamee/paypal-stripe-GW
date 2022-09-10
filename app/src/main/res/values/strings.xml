@@ -6,5 +6,7 @@
     <string name="package_">Package</string>
     <string name="bdt">BDT</string>
     <string name="validity">Validity</string>
-    <string name="pay_now">Pay Now</string>
+    <string name="pay_now">Pay with Stripe</string>
+    <string name="paypal">Paypal</string>
+    <string name="stripe">Stripe</string>
 </resources>

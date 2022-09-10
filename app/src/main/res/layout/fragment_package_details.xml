@@ -64,17 +64,58 @@
             />
         </LinearLayout>
 
-        <com.paypal.checkout.paymentbutton.PaymentButtonContainer
-            android:id="@+id/payment_button_container"
+        <RadioGroup
+            android:id="@+id/onPaymentMethodClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pay_now"
-            app:paypal_button_color="silver"
-            app:paypal_button_label="pay"
-            app:paypal_button_shape="rectangle"
-            app:paypal_button_size="large"
-            app:paypal_button_enabled="true"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintBottom_toTopOf="@id/btn">
+
+            <RadioButton
+                android:id="@+id/radio_stripe"
+                style="@style/radio_btn"
+                android:text="@string/stripe"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/radio_paypal"
+                style="@style/radio_btn"
+                android:text="@string/paypal"/>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/strip_pay_btn"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="70dp"
+                android:backgroundTint="@color/very_dark_grayish_blue"
+                android:elevation="5dp"
+                app:cornerRadius="5dp"
+                android:text="@string/pay_now"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <com.paypal.checkout.paymentbutton.PaymentButtonContainer
+                android:id="@+id/payment_button_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_now"
+                android:visibility="gone"
+                app:paypal_button_color="silver"
+                app:paypal_button_label="pay"
+                app:paypal_button_shape="rectangle"
+                app:paypal_button_size="large"
+                app:paypal_button_enabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
