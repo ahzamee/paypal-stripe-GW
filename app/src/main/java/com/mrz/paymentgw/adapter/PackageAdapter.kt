@@ -23,7 +23,11 @@ class PackageAdapter (): RecyclerView.Adapter<PackageAdapter.PackageViewHolder>(
         }
 
         override fun getItemCount(): Int {
-            return appEntityList.size
+            try{
+                return appEntityList.size
+            }catch (e : Exception){
+                return 0
+            }
         }
 
         fun onMovieClick(listener: (AppEntityPackageList) -> Unit) {

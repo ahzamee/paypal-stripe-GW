@@ -1,24 +1,31 @@
 package com.mrz.paymentgw.viewmodel
 
-import android.util.Log
-import android.view.View
-import android.widget.RadioGroup
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mrz.paymentgw.databinding.FragmentPackageDetailsBinding
-import com.paypal.checkout.approve.OnApprove
-import com.paypal.checkout.cancel.OnCancel
-import com.paypal.checkout.createorder.CreateOrder
-import com.paypal.checkout.createorder.CurrencyCode
-import com.paypal.checkout.createorder.OrderIntent
-import com.paypal.checkout.createorder.UserAction
-import com.paypal.checkout.error.OnError
+import androidx.lifecycle.viewModelScope
+import com.mrz.paymentgw.model.StripeAccessToken
+import com.mrz.paymentgw.repository.StripeRepo
+import com.mrz.paymentgw.util.Events
+import com.mrz.paymentgw.util.Status
+import com.mrz.paymentgw.util.Result
 import com.paypal.checkout.order.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PackageDetailsViewModel: ViewModel() {
+@HiltViewModel
+class PackageDetailsViewModel @Inject constructor(
+    private val repo: StripeRepo
+    ): ViewModel() {
 
-    fun savePaypalPayment(purchaseUnits: List<PurchaseUnit>) {}
 
+    private val _stripeAccessToken = MutableLiveData<Events<Result<StripeAccessToken>>>()
+    val stripeAccessToken: LiveData<Events<Result<StripeAccessToken>>> = _stripeAccessToken
+
+    fun getStripeAccessToken(id: Int) = viewModelScope.launch{
+        _stripeAccessToken.postValue(Events(Result(Status.LOADING, null, null)))
+        _stripeAccessToken.postValue(Events(repo.getStripeAccessToken(id)))
+    }
 
 }
