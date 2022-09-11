@@ -20,5 +20,5 @@ class AppEntityPackageList(
 class AppEntityUserPackageOrder(
     @PrimaryKey(autoGenerate = true)@ColumnInfo(name = "id")val id: Int = 0,
     @ColumnInfo(name = "packageId")val packageId: Int?,
-    @ColumnInfo(name = "purchased_on")val createdOn:String?
-)
+    @ColumnInfo(name = "purchased_on")val purchased_on:String?
+):Serializable

@@ -1,6 +1,5 @@
 package com.mrz.paymentgw.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,8 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.mrz.paymentgw.R
 import com.mrz.paymentgw.BuildConfig.STAGING_STRIPE_PUBLISH_KEY
+import com.mrz.paymentgw.database.AppEntityUserPackageOrder
 import com.mrz.paymentgw.databinding.FragmentPackageDetailsBinding
 import com.mrz.paymentgw.util.Status
+import com.mrz.paymentgw.util.showDialog
+import com.mrz.paymentgw.util.todayDate
 import com.mrz.paymentgw.viewmodel.PackageDetailsViewModel
 import com.paypal.checkout.approve.OnApprove
 import com.paypal.checkout.cancel.OnCancel
@@ -22,6 +24,7 @@ import com.paypal.checkout.createorder.*
 import com.paypal.checkout.error.OnError
 import com.paypal.checkout.order.*
 import com.stripe.android.PaymentConfiguration
+import com.stripe.android.model.PaymentIntent
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,7 +70,7 @@ class PackageDetailsFragment : Fragment() {
 
         binding.stripPayBtn.setOnClickListener {
 
-            viewModel.getStripeAccessToken(1)
+            viewModel.getStripeAccessToken(args.packageItem!!.id)
 
             viewModel.stripeAccessToken.observe(viewLifecycleOwner){
                 when(it.getContentIfNotHandled()?.status){
@@ -83,16 +86,15 @@ class PackageDetailsFragment : Fragment() {
                         Log.d("aaaaaa", "error")
                     }
 
-                    else -> TODO()
+                    else -> {
+                        Toast.makeText(requireContext(), "Please wait", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
     }
 
     private fun startStripePayment(clientSecret: String) {
-
-
-
 
         paymentSheet.presentWithPaymentIntent(
             clientSecret
@@ -108,8 +110,16 @@ class PackageDetailsFragment : Fragment() {
                 Log.d("aaaaaError:","Failed: ${paymentSheetResult.error}")
             }
             is PaymentSheetResult.Completed -> {
-                // Display for example, an order confirmation screen
                 Log.d("aaaaa","Completed")
+
+                showDialog(requireActivity(),resources.getString(R.string.dialog_body_success_purchase))
+
+                val appEntityPackagePurchaseOrder = AppEntityUserPackageOrder(
+                    packageId = args.packageItem!!.id,
+                    purchased_on = todayDate("dd:mm:yy"),
+                )
+
+                viewModel.insertPackagePurchaseInfo(appEntityPackagePurchaseOrder)
             }
         }
     }

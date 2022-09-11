@@ -9,4 +9,7 @@
     <string name="pay_now">Pay with Stripe</string>
     <string name="paypal">Paypal</string>
     <string name="stripe">Stripe</string>
+    <string name="dialog_title_status">Status</string>
+    <string name="dialog_body_success_purchase">Your Package has been purchased successfully</string>
+
 </resources>

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mrz.paymentgw.database.AppDao
+import com.mrz.paymentgw.database.AppEntityUserPackageOrder
 import com.mrz.paymentgw.model.StripeAccessToken
 import com.mrz.paymentgw.repository.StripeRepo
 import com.mrz.paymentgw.util.Events
@@ -16,9 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PackageDetailsViewModel @Inject constructor(
-    private val repo: StripeRepo
+    private val repo: StripeRepo,
+    private val appDao: AppDao
     ): ViewModel() {
-
 
     private val _stripeAccessToken = MutableLiveData<Events<Result<StripeAccessToken>>>()
     val stripeAccessToken: LiveData<Events<Result<StripeAccessToken>>> = _stripeAccessToken
@@ -26,6 +28,12 @@ class PackageDetailsViewModel @Inject constructor(
     fun getStripeAccessToken(id: Int) = viewModelScope.launch{
         _stripeAccessToken.postValue(Events(Result(Status.LOADING, null, null)))
         _stripeAccessToken.postValue(Events(repo.getStripeAccessToken(id)))
+    }
+
+    fun insertPackagePurchaseInfo(appEntity: AppEntityUserPackageOrder){
+        viewModelScope.launch {
+            appDao.insertPackagePurchase(appEntity)
+        }
     }
 
 }

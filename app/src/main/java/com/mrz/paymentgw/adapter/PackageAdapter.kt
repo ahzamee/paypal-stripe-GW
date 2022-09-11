@@ -30,7 +30,7 @@ class PackageAdapter (): RecyclerView.Adapter<PackageAdapter.PackageViewHolder>(
             }
         }
 
-        fun onMovieClick(listener: (AppEntityPackageList) -> Unit) {
+        fun onPackageClick(listener: (AppEntityPackageList) -> Unit) {
             onCLick = listener
         }
 
